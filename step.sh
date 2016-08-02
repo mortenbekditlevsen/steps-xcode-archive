@@ -428,6 +428,20 @@ echo_info "Exporting dSym from generated Archive..."
 
 archive_dsyms_folder="${archive_path}/dSYMs"
 ls "${archive_dsyms_folder}"
+
+// For dev purposes only - replace with configuration toggle:
+ZIP_ALL_DSYMS=1
+
+if [ "$ZIP_ALL_DSYMS" -eq 1 ]
+then
+  pushd "${archive_dsyms_folder}"
+  dsym_zip_path="${output_dir}/all.dSYM.zip"
+  /usr/bin/zip -rTy \
+    "${dsym_zip_path}" \
+    *.dSYM
+  envman add --key BITRISE_DSYM_PATH --value "${dsym_zip_path}"
+  popd
+else
 app_dsym_count=0
 app_dsym_path=""
 
@@ -475,6 +489,9 @@ if [[ ! -z "${DSYM_PATH}" && -d "${DSYM_PATH}" ]] ; then
 else
 	echo_warn "No dSYM found (or not a directory: ${DSYM_PATH})"
 fi
+fi
+
+
 
 #
 # Export *.xcarchive path
