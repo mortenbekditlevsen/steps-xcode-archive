@@ -429,7 +429,7 @@ echo_info "Exporting dSym from generated Archive..."
 archive_dsyms_folder="${archive_path}/dSYMs"
 ls "${archive_dsyms_folder}"
 
-// For dev purposes only - replace with configuration toggle:
+# For dev purposes only - replace with configuration toggle:
 ZIP_ALL_DSYMS=1
 
 if [ "$ZIP_ALL_DSYMS" -eq 1 ]
